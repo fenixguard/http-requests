@@ -168,18 +168,22 @@ def main():
             for language, abbreviation in supported_languages.items():
                 print(f"{language.capitalize()}: {abbreviation}")
             print("-" * 25)
-
-        to_lang = input(
-            f"Введите язык (английский, русский и т.д) на который необходимо перевести файл {input_path}, "
-            f"если поле пустое, то язык будет выбран русский: ")
-        if to_lang != '':
-            try:
-                to_lang = supported_languages[to_lang.lower()]
-            except KeyError:
-                print(
-                    "Вы ввели неверно язык или такого языка нет в списке поддерживаемых, проверьте правильность ввода!")
-        else:
-            to_lang = 'ru'
+        main_flag = True
+        while main_flag:
+            to_lang = input(
+                f"Введите язык (английский, русский и т.д) на который необходимо перевести файл '{input_path}', "
+                f"если поле пустое, то язык будет выбран русский: ")
+            if to_lang != '':
+                try:
+                    to_lang = supported_languages[to_lang.lower()]
+                    main_flag = False
+                except KeyError:
+                    print(
+                        "Вы ввели неверно язык или такого языка нет в списке поддерживаемых, проверьте правильность "
+                        "ввода!")
+                    continue
+            else:
+                to_lang = 'ru'
 
         output_path = f"{input_path[:-4]}_translate_to_{to_lang.upper()}.txt"
 
